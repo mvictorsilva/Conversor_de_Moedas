@@ -1,4 +1,6 @@
+from cgitb import text
 from tkinter import *
+from tkinter import font
 import requests
 import json
 
@@ -21,7 +23,7 @@ class Application():
         self.janela.title('Cotações de todas as moedas')
         self.janela.iconbitmap('codificando/imagens/icon_cotacoes.ico')
         self.janela.geometry('600x260')
-        self.janela.config(bg='#ffffff')
+        self.janela.config(bg='beige')
         self.janela.resizable(0, 0)
 
     def imagens(self):
@@ -52,7 +54,7 @@ class Application():
                 text='R$',
                 font=('times', 20),
                 fg='#B22222',
-                bg='#ffffff')
+                bg='#FAF0E6')
 
         self.titulo.place(x=20, y=10)
         self.titulo_bitcoin.place(x=550, y=11)
