@@ -24,15 +24,34 @@ class BackEnd():
 
         if self.selecionado == 0:
             self.resultado_dolar = self.dolar_inteiro * self.digitado
-            print(self.resultado_dolar)
+            self.dolar_label = Label(self.janela,
+                text=self.resultado_dolar,
+                font=('times', 20),
+                fg='#B22222',
+                bg='#ffffff')
+            self.dolar_simbolo = Label(self.janela,
+                    image=self.simbolo_dolar)
+
+            self.dolar_label.place(x=240, y=205)
+            self.dolar_simbolo.place(x=290, y=110)
 
         elif self.selecionado == 1:
             self.resultado_euro = self.euro_inteiro * self.digitado
-            print(self.resultado_euro)
+            self.euro_label = Label(self.janela,
+                    text=self.resultado_euro,
+                    font=('times', 20),
+                    fg='#B22222',
+                    bg='#ffffff')
+            self.euro_label.place(x=240, y=205)
 
         elif self.selecionado == 2:
             self.resultado_bitcoin = self.bitcoin_inteiro * self.digitado
-            print(self.resultado_bitcoin)
+            self.bitcoin_label = Label(self.janela,
+                    text=self.resultado_bitcoin,
+                    font=('times', 20),
+                    fg='#B22222',
+                    bg='#ffffff')
+            self.bitcoin_label.place(x=240, y=205)
 
         else:
             print('escolha uma opção')
@@ -59,6 +78,9 @@ class FrontEnd(BackEnd):
         self.bitcoin = PhotoImage(file='codificando/imagens/bitcoin.png')
         self.dolar = PhotoImage(file='codificando/imagens/dolar.png')
         self.euro = PhotoImage(file='codificando/imagens/euro.png')
+        self.simbolo_bitcoin = PhotoImage(file='codificando/imagens/simbolo_bitcoin.png')
+        self.simbolo_dolar = PhotoImage(file='codificando/imagens/simbolo_dolar.png')
+        self.simbolo_euro = PhotoImage(file='codificando/imagens/simbolo_euro.png')
 
     def labels(self):
         self.titulo = Label(self.janela,
@@ -79,6 +101,12 @@ class FrontEnd(BackEnd):
                 image=self.dolar,
                 bg='#ffffff')
 
+        self.montante = Label(self.janela,
+                text='Montante:',
+                font=('verdana', 12),
+                fg='blue',
+                bg='#ffffff')
+
         self.resultado = Label(self.janela,
                 text='R$',
                 font=('times', 20),
@@ -89,6 +117,7 @@ class FrontEnd(BackEnd):
         self.titulo_bitcoin.place(x=550, y=11)
         self.titlulo_euro.place(x=510, y=11)
         self.titulo_dolar.place(x=469, y=11)
+        self.montante.place(x=280, y=70)
         self.resultado.place(x=200, y=205)
 
     def caixas_de_texto(self):
@@ -97,7 +126,7 @@ class FrontEnd(BackEnd):
                 borderwidth=1,
                 relief='raised')
 
-        self.inserir.place(x=340, y=100, width=150, height=25)
+        self.inserir.place(x=340, y=110, width=150, height=25)
 
     def botoes(self):
         self.conversor = Button(self.janela,
