@@ -1,12 +1,43 @@
 from tkinter import *
+import awesometkinter as atk
 import requests
 import json
 
-cotacoes = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
+class BackEnd():
+    def cotacoes_variaveis(self):
+        self.cotacoes_site = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
+        self.cotacoes = self.cotacoes_site.json()
 
-cotacoes = cotacoes.json()
+        self.cotacao_dolar = self.cotacoes['USD']['ask']
+        self.dolar_inteiro = float(self.cotacao_dolar)
 
-class Application():
+        self.cotacao_euro = self.cotacoes['EUR']['ask']
+        self.euro_inteiro = float(self.cotacao_euro)
+
+        self.cotacao_bitcoin = self.cotacoes['BTC']['ask']
+        self.bitcoin_inteiro = float(self.cotacao_bitcoin)
+
+    def definindo_escolha(self):
+        self.cotacoes_variaveis()
+        self.selecionado = self.escolha.get()
+        self.digitado = float(self.inserir.get())
+
+        if self.selecionado == 0:
+            self.resultado_dolar = self.dolar_inteiro * self.digitado
+            print(self.resultado_dolar)
+
+        elif self.selecionado == 1:
+            self.resultado_euro = self.euro_inteiro * self.digitado
+            print(self.resultado_euro)
+
+        elif self.selecionado == 2:
+            self.resultado_bitcoin = self.bitcoin_inteiro * self.digitado
+            print(self.resultado_bitcoin)
+
+        else:
+            print('escolha uma opção')
+
+class FrontEnd(BackEnd):
     def __init__(self):
         self.janela = Tk()
         self.especificacoes_janela()
@@ -70,6 +101,7 @@ class Application():
 
     def botoes(self):
         self.conversor = Button(self.janela,
+                command=self.definindo_escolha,
                 text='Converter',
                 font=('verdana', 13, 'bold'),
                 borderwidth=0,
@@ -79,24 +111,30 @@ class Application():
         self.conversor.place(x=300, y=150)
 
     def selecionar(self):
-        self.dolar_radio = Radiobutton(self.janela,
+
+        self.escolha = IntVar()
+
+        self.dolar_radio = atk.Radiobutton(self.janela,
+                variable=self.escolha,
                 text='Dolar',
                 font=('verdana', 12),
-                value='d',
+                value=0,
                 bg='#ffffff')
-        self.euro_radio = Radiobutton(self.janela,
+        self.euro_radio = atk.Radiobutton(self.janela,
+                variable=self.escolha,
                 text='Euro',
                 font=('verdana', 12),
-                value='e',
+                value=1,
                 bg='#ffffff')
-        self.bitcoin_radio = Radiobutton(self.janela,
-                text='Euro',
+        self.bitcoin_radio = atk.Radiobutton(self.janela,
+                variable=self.escolha,
+                text='Bitcoin',
                 font=('verdana', 12),
-                value='b',
+                value=2,
                 bg='#ffffff')
 
         self.dolar_radio.place(x=50, y=80)
         self.euro_radio.place(x=50, y=120)
         self.bitcoin_radio.place(x=50, y=160)
 
-Application()
+FrontEnd()
