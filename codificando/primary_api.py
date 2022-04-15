@@ -8,19 +8,19 @@ class BackEnd():
         self.cotacoes_site = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
         self.cotacoes = self.cotacoes_site.json()
 
-        self.cotacao_dolar = self.cotacoes['USD']['ask']
+        self.cotacao_dolar = self.cotacoes['USDBRL']['ask']
         self.dolar_inteiro = float(self.cotacao_dolar)
 
-        self.cotacao_euro = self.cotacoes['EUR']['ask']
+        self.cotacao_euro = self.cotacoes['EURBRL']['ask']
         self.euro_inteiro = float(self.cotacao_euro)
 
-        self.cotacao_bitcoin = self.cotacoes['BTC']['ask']
+        self.cotacao_bitcoin = self.cotacoes['BTCBRL']['ask']
         self.bitcoin_inteiro = float(self.cotacao_bitcoin)
 
     def definindo_escolha(self):
         self.cotacoes_variaveis()
         self.selecionado = self.escolha.get()
-        self.digitado = float(self.inserir.get())
+        self.digitado = float(self.inserir.get().replace("-", ""))
 
         if self.selecionado == 0:
             self.resultado_dolar = self.dolar_inteiro * self.digitado
@@ -30,10 +30,11 @@ class BackEnd():
                 fg='#B22222',
                 bg='#ffffff')
             self.dolar_simbolo = Label(self.janela,
-                    image=self.simbolo_dolar)
+                    image=self.simbolo_dolar,
+                    bg='#ffffff')
 
             self.dolar_label.place(x=240, y=205)
-            self.dolar_simbolo.place(x=290, y=110)
+            self.dolar_simbolo.place(x=300, y=110)
 
         elif self.selecionado == 1:
             self.resultado_euro = self.euro_inteiro * self.digitado
@@ -42,7 +43,12 @@ class BackEnd():
                     font=('times', 20),
                     fg='#B22222',
                     bg='#ffffff')
+            self.euro_simbolo = Label(self.janela,
+                    image=self.simbolo_euro,
+                    bg='#ffffff')
+
             self.euro_label.place(x=240, y=205)
+            self.euro_simbolo.place(x=300, y=110)
 
         elif self.selecionado == 2:
             self.resultado_bitcoin = self.bitcoin_inteiro * self.digitado
@@ -51,7 +57,12 @@ class BackEnd():
                     font=('times', 20),
                     fg='#B22222',
                     bg='#ffffff')
+            self.bitcoin_simbolo = Label(self.janela,
+                    image=self.simbolo_bitcoin,
+                    bg='#ffffff')
+
             self.bitcoin_label.place(x=240, y=205)
+            self.bitcoin_simbolo.place(x=300, y=110)
 
         else:
             print('escolha uma opção')
@@ -112,6 +123,9 @@ class FrontEnd(BackEnd):
                 font=('times', 20),
                 fg='#B22222',
                 bg='#ffffff')
+                
+#        self.simbolo = Label(self.janela,
+#                image=)
 
         self.titulo.place(x=20, y=10)
         self.titulo_bitcoin.place(x=550, y=11)
