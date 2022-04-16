@@ -1,4 +1,5 @@
 from tkinter import *
+from turtle import left
 import awesometkinter as atk
 import requests
 import json
@@ -7,14 +8,15 @@ class BackEnd():
     def cotacoes_variaveis(self):
         self.cotacoes_site = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
         self.cotacoes = self.cotacoes_site.json()
+        print(self.cotacoes)
 
-        self.cotacao_dolar = self.cotacoes['USDBRL']['ask']
+        self.cotacao_dolar = self.cotacoes['USDBRL']['bid']
         self.dolar_inteiro = float(self.cotacao_dolar)
 
-        self.cotacao_euro = self.cotacoes['EURBRL']['ask']
+        self.cotacao_euro = self.cotacoes['EURBRL']['bid']
         self.euro_inteiro = float(self.cotacao_euro)
 
-        self.cotacao_bitcoin = self.cotacoes['BTCBRL']['ask']
+        self.cotacao_bitcoin = self.cotacoes['BTCBRL']['bid']
         self.bitcoin_inteiro = float(self.cotacao_bitcoin)
 
     def definindo_escolha(self):
@@ -25,7 +27,7 @@ class BackEnd():
         if self.selecionado == 0:
             self.resultado_dolar = self.dolar_inteiro * self.digitado
             self.dolar_label = Label(self.janela,
-                text=self.resultado_dolar,
+                text=(f"R$ {self.resultado_dolar:_.2f}").replace('.', ',').replace('_', '.'),
                 font=('times', 20),
                 fg='#B22222',
                 bg='#ffffff')
@@ -33,13 +35,13 @@ class BackEnd():
                     image=self.simbolo_dolar,
                     bg='#ffffff')
 
-            self.dolar_label.place(x=240, y=205)
+            self.dolar_label.place(x=10, y=205, width=580)
             self.dolar_simbolo.place(x=300, y=110)
 
         elif self.selecionado == 1:
             self.resultado_euro = self.euro_inteiro * self.digitado
             self.euro_label = Label(self.janela,
-                    text=self.resultado_euro,
+                    text=(f"R$ {self.resultado_euro:_.2f}").replace('.', ',').replace('_', '.'),
                     font=('times', 20),
                     fg='#B22222',
                     bg='#ffffff')
@@ -47,13 +49,13 @@ class BackEnd():
                     image=self.simbolo_euro,
                     bg='#ffffff')
 
-            self.euro_label.place(x=240, y=205)
+            self.euro_label.place(x=10, y=205, width=580)
             self.euro_simbolo.place(x=300, y=110)
 
         elif self.selecionado == 2:
             self.resultado_bitcoin = self.bitcoin_inteiro * self.digitado
             self.bitcoin_label = Label(self.janela,
-                    text=self.resultado_bitcoin,
+                    text=(f"R$ {self.resultado_bitcoin:.3f}"),
                     font=('times', 20),
                     fg='#B22222',
                     bg='#ffffff')
@@ -61,7 +63,7 @@ class BackEnd():
                     image=self.simbolo_bitcoin,
                     bg='#ffffff')
 
-            self.bitcoin_label.place(x=240, y=205)
+            self.bitcoin_label.place(x=10, y=205, width=580)
             self.bitcoin_simbolo.place(x=300, y=110)
 
         else:
@@ -118,21 +120,11 @@ class FrontEnd(BackEnd):
                 fg='blue',
                 bg='#ffffff')
 
-        self.resultado = Label(self.janela,
-                text='R$',
-                font=('times', 20),
-                fg='#B22222',
-                bg='#ffffff')
-                
-#        self.simbolo = Label(self.janela,
-#                image=)
-
         self.titulo.place(x=20, y=10)
         self.titulo_bitcoin.place(x=550, y=11)
         self.titlulo_euro.place(x=510, y=11)
         self.titulo_dolar.place(x=469, y=11)
         self.montante.place(x=280, y=70)
-        self.resultado.place(x=200, y=205)
 
     def caixas_de_texto(self):
         self.inserir = Entry(self.janela,
