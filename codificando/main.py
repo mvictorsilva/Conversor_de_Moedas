@@ -1,14 +1,12 @@
 from tkinter import *
-from turtle import left
 import awesometkinter as atk
 import requests
-import json
+
 
 class BackEnd():
     def cotacoes_variaveis(self):
         self.cotacoes_site = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL')
         self.cotacoes = self.cotacoes_site.json()
-        print(self.cotacoes)
 
         self.cotacao_dolar = self.cotacoes['USDBRL']['bid']
         self.dolar_inteiro = float(self.cotacao_dolar)
@@ -18,6 +16,7 @@ class BackEnd():
 
         self.cotacao_bitcoin = self.cotacoes['BTCBRL']['bid']
         self.bitcoin_inteiro = float(self.cotacao_bitcoin)
+
 
     def definindo_escolha(self):
         self.cotacoes_variaveis()
@@ -69,6 +68,7 @@ class BackEnd():
         else:
             print('escolha uma opção')
 
+
 class FrontEnd(BackEnd):
     def __init__(self):
         self.janela = Tk()
@@ -80,12 +80,14 @@ class FrontEnd(BackEnd):
         self.selecionar()
         self.janela.mainloop()
 
+
     def especificacoes_janela(self):
         self.janela.title('Cotações de todas as moedas')
         self.janela.iconbitmap('codificando/imagens/icon_cotacoes.ico')
         self.janela.geometry('600x260')
         self.janela.config(bg='#ffffff')
         self.janela.resizable(0, 0)
+
 
     def imagens(self):
         self.bitcoin = PhotoImage(file='codificando/imagens/bitcoin.png')
@@ -94,6 +96,7 @@ class FrontEnd(BackEnd):
         self.simbolo_bitcoin = PhotoImage(file='codificando/imagens/simbolo_bitcoin.png')
         self.simbolo_dolar = PhotoImage(file='codificando/imagens/simbolo_dolar.png')
         self.simbolo_euro = PhotoImage(file='codificando/imagens/simbolo_euro.png')
+
 
     def labels(self):
         self.titulo = Label(self.janela,
@@ -126,6 +129,7 @@ class FrontEnd(BackEnd):
         self.titulo_dolar.place(x=469, y=11)
         self.montante.place(x=280, y=70)
 
+
     def caixas_de_texto(self):
         self.inserir = Entry(self.janela,
                 font=('Times', 15),
@@ -133,6 +137,7 @@ class FrontEnd(BackEnd):
                 relief='raised')
 
         self.inserir.place(x=340, y=110, width=150, height=25)
+
 
     def botoes(self):
         self.conversor = Button(self.janela,
@@ -144,6 +149,7 @@ class FrontEnd(BackEnd):
                 bg='#5271FF')
 
         self.conversor.place(x=300, y=150)
+
 
     def selecionar(self):
 
@@ -171,5 +177,6 @@ class FrontEnd(BackEnd):
         self.dolar_radio.place(x=50, y=80)
         self.euro_radio.place(x=50, y=120)
         self.bitcoin_radio.place(x=50, y=160)
+
 
 FrontEnd()
